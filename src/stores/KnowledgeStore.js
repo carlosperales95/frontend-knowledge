@@ -3,11 +3,9 @@ import { defineStore } from 'pinia';
 
 export const useKnowledgeStore = defineStore('knowledgeStore', {
     state: () => ({
-        courses: [
-            {id: 1, title: 'Vanilla JS Curse', source: 'udemy', isFav: false, duration: '40'},
-            {id: 2, title: 'VueJS Curse', source: 'udemy', isFav: true, duration: '40'},
-        ],
-        name: 'Carlos'
+        name: 'Carlos',
+        courses: [],
+        isLoading: false
     }),
     getters: {
         favs: (state) => {
@@ -22,14 +20,40 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
         }
     },
     actions: {
-        addCourse(course) {
+        async getCourses() {
+            this.isLoading = true;
+            const res = await fetch('http://localhost:3000/courses');
+            const data = await res.json();
+            this.courses = data;
+            this.isLoading = false;
+        },
+        async addCourse(course) {
+            const res = await fetch('http://localhost:3000/courses', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(course)
+            });
+            
+            if(res.error) console.log(res.error);
             this.courses.push(course);
         },
-        deleteCourse(id) {
+        async deleteCourse(id) {
+            const res = await fetch(`http://localhost:3000/courses/${id}`, {
+                method: 'DELETE'
+            });
+            
+            if(res.error) console.log(res.error);
             this.courses = this.courses.filter(c => c.id !== id);
         },
-        toggleFav(id) {
+        async toggleFav(id) {
             const course = this.courses.find(c => c.id === id);
+            const res = await fetch(`http://localhost:3000/courses/${id}`, {
+                method: 'PATCH',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({isFav: !course.isFav})
+            });
+            
+            if(res.error) console.log(res.error);
             course.isFav = !course.isFav;
         }
     }

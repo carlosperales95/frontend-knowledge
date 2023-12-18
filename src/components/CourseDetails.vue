@@ -4,29 +4,29 @@
         <div class="icons">
             <i
                 class="material-icons"
-                @click="knowledgeStore.deleteCourse(course.id)"
+                @click="courseStore.deleteCourse(course.id)"
             >delete</i>
             <i
                 class="material-icons"
                 :class="{active: course.isFav}"
-                @click="knowledgeStore.toggleFav(course.id)"
+                @click="courseStore.toggleFav(course.id)"
             >favorite</i>
         </div>
     </div>
 </template>
 
 <script>
-import { useKnowledgeStore } from '../stores/KnowledgeStore'
+import { useKnowledgeStore } from '../stores/KnowledgeStore';
 
 export default {
     props: ['course'],
     setup() {
-        const knowledgeStore = useKnowledgeStore();
+        const courseStore = useKnowledgeStore();
 
         return {
-            knowledgeStore
+            courseStore
         }
-    },
+    }
 }
 </script>
 

@@ -10,27 +10,27 @@
 </template>
 
 <script>
-import { useKnowledgeStore } from '../stores/KnowledgeStore';
 import { ref } from 'vue';
+import { useKnowledgeStore } from '../stores/KnowledgeStore';
 
 export default {
     setup() {
         const courseStore = useKnowledgeStore();
+
         const newCourse = ref('');
 
         const handleSubmit = () => {
             if(newCourse.value.length < 0) return;
 
             courseStore.addCourse({
+                id: Math.floor(Math.random() * 10000),
                 title: newCourse.value,
+                source: 'youtube',
                 isFav: false,
-                source: 'null',
-                duration: '40',
-                id: Math.floor(Math.random() * 10000)
+                duration: '40'
             });
-
             newCourse.value = '';
-        }
+        };
 
         return {
             newCourse,
@@ -69,6 +69,6 @@ form input {
     padding: 10px;
     border-radius: 6px;
     color: #555;
-    font-size: 1em;
+    font-size: 14px;
 }
 </style>

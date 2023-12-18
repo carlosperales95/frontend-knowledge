@@ -1,0 +1,25 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "title": "Vanilla JS Course",
+      "source": "udemy",
+      "isFav": false,
+      "duration": 40
+    },
+    {
+      "id": 3,
+      "title": "Pinia Crash Course",
+      "source": "youtube",
+      "isFav": true,
+      "duration": 40
+    },
+    {
+      "id": 4,
+      "title": "HTML tags and Basics",
+      "source": "youtube",
+      "isFav": true,
+      "duration": 40
+    }
+  ]
+}

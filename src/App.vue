@@ -9,91 +9,62 @@
       <course-form></course-form>
     </div>
 
-    <nav class="filter">
-      <button
-        class="filter-button"
-        @click="filter = 'all'"
-      >
-        All courses
-      </button>
-      <button
-        class="filter-button"
-        @click="filter = 'favs'"
-      >
-        Fav courses
-      </button>
-    </nav>
-
-    <div
-      v-if="filter === 'all'"
-      class="courses-list"
+    <course-filter
+      :isLoading="isLoading"
+      :filter="filter"
+      :filters="filters"
+      @change-filter="changeFilter"
     >
-      <p>You have {{ knowledgeStore.totalCount }} courses left to finish</p>
-      <course-details
-        v-for="course in knowledgeStore.courses"
-        :key="course.id"
-        :course="course"
-      ></course-details>
-    </div>
-    <div
-      v-if="filter === 'favs'"
-      class="courses-list"
-    >
-      <p>You have {{ knowledgeStore.favCount }} courses left to finish</p>
-      <course-details
-        v-for="course in knowledgeStore.favs"
-        :key="course.id"
-        :course="course"
-      ></course-details>
-    </div>
+      <div>
+        <div v-for="f in filters" :key="f.name">
+            <div v-if="filter === f.name">
+                <course-list
+                  :coursesCount="f.data.count"
+                  :courses="f.data.courses"
+                ></course-list>
+            </div>
+        </div>
+      </div>
+    </course-filter>
+    
   </main>
 </template>
 
 <script>
+import { ref, reactive } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useKnowledgeStore } from './stores/KnowledgeStore'
-import CourseDetails from './components/CourseDetails.vue';
-import { ref } from 'vue';
 import CourseForm from './components/CourseForm.vue';
+import CourseList from './components/CoursesList.vue';
+import CourseFilter from './components/CourseFilter.vue';
 
   export default {
     components: {
-        CourseDetails,
-        CourseForm
+        CourseForm,
+        CourseList,
+        CourseFilter
     },
     setup() {
-      const knowledgeStore = useKnowledgeStore();
+      const courseStore = useKnowledgeStore();
+      const { courses, isLoading, favs, totalCount, favCount } = storeToRefs(courseStore);
+      courseStore.getCourses();
+
       const filter = ref('all');
+      const filters = reactive([
+        {name: 'all', text: 'All Courses', data: {count: totalCount, courses: courses}},
+        {name: 'favs', text: 'Fav Courses', data: {count: favCount, courses: favs}}
+      ]);
+
+      const changeFilter = (value) => {
+        filter.value = value;
+      };
 
       return {
-        knowledgeStore,
-        filter
+        filter,
+        filters,
+        isLoading,
+        changeFilter
       };
     }
   }
 </script>
-
-<style scoped>
-.courses-list {
-  max-width: 640px;
-  margin: 20px auto;
-}
-
-
-.filter {
-  width: 640px;
-  margin: 10px auto;
-  text-align: right;
-}
-
-.filter-button {
-  display: inline-block;
-  margin-left: 10px;
-  background: #fff;
-  border: 2px solid #555;
-  border-radius: 4px;
-  padding: 4px 8px;
-  cursor: pointer;
-  font-size: 0.8;
-  font-size: 1em;
-}
-</style>
