@@ -29,13 +29,13 @@ export default {
 <style scoped>
 .filter {
     width: 640px;
-    margin: 10px auto;
-    text-align: right;
+    margin: 0.8rem auto;
+    text-align: left;
 }
 
 .filter-button {
     display: inline-block;
-    margin-left: 10px;
+    margin-right: 15px;
     background: #fff;
     border: 2px solid #555;
     border-radius: 4px;
