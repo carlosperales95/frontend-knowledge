@@ -5,7 +5,8 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
     state: () => ({
         name: 'Carlos',
         courses: [],
-        isLoading: false
+        isLoading: false,
+        selectedCourse: {},
     }),
     getters: {
         favs: (state) => {
@@ -21,14 +22,25 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
     },
     actions: {
         async getCourses() {
+            this.courses = [];
             this.isLoading = true;
-            const res = await fetch('http://localhost:3000/courses');
+            const res = await fetch('https://pinia-courses-default-rtdb.firebaseio.com/courses.json');
             const data = await res.json();
-            this.courses = data;
+            
+            if (data) {
+                Object.entries(data).forEach(c => {
+                    const course = {
+                        id: c[0],
+                        ...c[1]
+                    };
+                    this.courses.push(course);
+                });
+            }
+            
             this.isLoading = false;
         },
         async addCourse(course) {
-            const res = await fetch('http://localhost:3000/courses', {
+            const res = await fetch('https://pinia-courses-default-rtdb.firebaseio.com/courses.json', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(course)
@@ -38,7 +50,7 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
             this.courses.push(course);
         },
         async deleteCourse(id) {
-            const res = await fetch(`http://localhost:3000/courses/${id}`, {
+            const res = await fetch(`https://pinia-courses-default-rtdb.firebaseio.com/courses/${id}.json`, {
                 method: 'DELETE'
             });
             
@@ -47,7 +59,7 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
         },
         async toggleFav(id) {
             const course = this.courses.find(c => c.id === id);
-            const res = await fetch(`http://localhost:3000/courses/${id}`, {
+            const res = await fetch(`https://pinia-courses-default-rtdb.firebaseio.com/courses/${id}.json`, {
                 method: 'PATCH',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({isFav: !course.isFav})
@@ -55,7 +67,30 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
             
             if(res.error) console.log(res.error);
             course.isFav = !course.isFav;
-        }
+        },
+        async getCourse(id) {
+            this.isLoading = true;
+            const res = await fetch(`https://pinia-courses-default-rtdb.firebaseio.com/courses/${id}.json`);
+            
+            if(res.error) console.log(res.error);
+            const data = await res.json();
+            this.selectedCourse = data;
+            this.isLoading = false
+        },
+        async editCourse(id, course) {
+            const res = await fetch(`https://pinia-courses-default-rtdb.firebaseio.com/courses/${id}.json`, {
+                method: 'PATCH',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    title: course.title,
+                    source: course.source,
+                    duration: course.duration
+                })
+            });
+            
+            if(res.error) console.log(res.error);
+            course.isFav = !course.isFav;
+        },
     }
 });
 

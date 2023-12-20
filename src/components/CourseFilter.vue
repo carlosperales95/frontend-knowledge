@@ -11,6 +11,10 @@
     </nav>
 
     <div class="loading" v-if="isLoading">Loading courses...</div>
+    <div class="empty-message" v-else-if="!courses || courses.length === 0">
+        You have no courses in your knowledge base yet. Start adding them!
+        <router-link class="router-button" to="/courses/new"> Add Course</router-link>
+    </div>
     <slot v-else></slot>
 </template>
 
@@ -21,8 +25,11 @@ export default {
     components: {
         CourseList
     },
-    props: ['isLoading', 'filter', 'filters'],
-    emits: ['change-filter']
+    props: ['isLoading', 'filter', 'filters', 'courses'],
+    emits: ['change-filter'],
+    // setup(props) {
+    //     console.log(props.courses);
+    // }
 }
 </script>
 
@@ -53,5 +60,25 @@ export default {
     padding: 5px 0;
     text-align: center;
     margin: 30px auto;
+}
+
+.router-button {
+    background-color: #ffd859;
+    padding: 1rem;
+    text-decoration: none;
+    border-radius: 30px;
+    color: #555;
+    cursor: pointer;
+    width: 6rem;
+}
+
+.empty-message {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    border: 1px solid #555;
+    border-radius: 20px;
+    margin: 3rem;
 }
 </style>

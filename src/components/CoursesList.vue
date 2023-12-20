@@ -1,23 +1,23 @@
 <template>
-    <div class="courses-list" >
+    <div class="courses-list">
         <div class="list-header">
             <p>You have {{ coursesCount }} courses left to finish</p>
-            <router-link class="router-button" to="/courses/new">Add</router-link>
+            <router-link class="router-button" to="/courses/new">Add Course</router-link>
         </div>
-        <course-details
+        <course-item
             v-for="course in courses"
             :key="course.id"
             :course="course"
-        ></course-details>
+        ></course-item>
     </div>
 </template>
 
 <script>
-import CourseDetails from './CourseDetails.vue';
+import CourseItem from './CourseItem.vue';
 
 export default {
     components: {
-        CourseDetails
+        CourseItem
     },
     props: ['coursesCount', 'courses'],
 }
@@ -40,7 +40,7 @@ export default {
 
 .router-button:hover {
     color: #000;
-    background-color: #ffe659;
+    background-color: #e6ff59;
     transition: background-color 1s linear;
 }
 

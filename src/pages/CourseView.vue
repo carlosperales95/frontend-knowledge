@@ -1,6 +1,6 @@
 <template>
     <div class="new-course-form">
-        <h1> Add course</h1>
+        <h1> Edit course</h1>
         <form @submit.prevent="handleSubmit">
             <div class="form-control">
                 <label for="title">Course or resource title</label>
@@ -51,37 +51,48 @@
                 A course of 0 minutes is not possible. Please enter an approximate course duration (in minutes)
             </p>
             <button>Submit</button>
+            <a @click.stop="$emit('change-mode', 'view')">Back</a>
         </form>
     </div>
 </template>
 
 <script>
-// import { reactive } from 'vue';
 import { useKnowledgeStore } from '../stores/KnowledgeStore';
 import { useRouter } from "vue-router";
 import useForm from "../components/hooks/form.js";
-
+import { ref, toRef } from 'vue';
 export default {
-    // props: ['course'],
-    setup() {
+    props: ['course', 'id', 'mode'],
+    setup(props) {
         const courseStore = useKnowledgeStore();
         const router = useRouter();
+        
         const {title, source, duration, validateTitle, validateSource, validateDuration, clearErrors} = useForm();
 
+        title.value = props.course.title;
+        source.value = props.course.source;
+        duration.value = props.course.duration;
+        const mode = toRef(props.mode)
+        
         const handleSubmit = () => {
             validateTitle();
             validateSource();
             validateDuration();
             if(!title.isValid || !source.isValid || !duration.isValid) return;
 
-            courseStore.addCourse({
+            courseStore.editCourse(props.id, {
                 title: title.value,
                 source: source.value,
                 isFav: false,
                 duration: duration.value
             });
+            mode.value = 'view';
+            // router.replace({path: '/'});
+        };
 
-            router.replace({ path: '/' });
+        const goBack = () => {
+            mode.value = 'view';
+            console.log(mode);
         };
 
         return {
@@ -90,6 +101,7 @@ export default {
             validateDuration,
             validateSource,
             clearErrors,
+            goBack,
             title,
             source,
             duration
@@ -100,7 +112,6 @@ export default {
 
 <style scoped>
 .new-course-form {
-    /* background: #e7e7e7; */
     padding: 20px 0;
     text-align: center;
 }
@@ -165,5 +176,9 @@ form select {
     color: #ff9659;
     text-align: left;
     font-size: 14px;
+}
+
+a {
+    cursor: pointer;
 }
 </style>

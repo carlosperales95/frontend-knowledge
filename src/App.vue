@@ -5,7 +5,7 @@
       <h1>Pinia Knowledge</h1>
       <div class="router-bar">
         <router-link class="router-button" to="/courses">Courses</router-link>
-        <router-link class="router-button" to="/">About</router-link>
+        <router-link class="router-button" to="/about">About</router-link>
       </div>
     </header>
       <router-view></router-view>

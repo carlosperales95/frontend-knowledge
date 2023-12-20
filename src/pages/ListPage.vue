@@ -3,6 +3,7 @@
         :isLoading="isLoading"
         :filter="filter"
         :filters="filters"
+        :courses="courses"
         @change-filter="changeFilter"
     >
         <div>
@@ -34,7 +35,6 @@ export default {
     setup() {
         const courseStore = useKnowledgeStore();
 
-        console.log(courseStore);
         const { courses, isLoading, favs, totalCount, favCount } = storeToRefs(courseStore);
         courseStore.getCourses();
 
@@ -51,6 +51,7 @@ export default {
         return {
             filter,
             filters,
+            courses,
             isLoading,
             changeFilter
         };

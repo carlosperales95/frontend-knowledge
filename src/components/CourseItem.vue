@@ -1,6 +1,8 @@
 <template>
     <div class="course">
-        <h3>{{ course.title }}</h3>
+        <router-link class="course-link" :to="courseEditUrl" :course="course">
+            <h3>{{ course.title }}</h3>
+        </router-link>
         <div class="icons">
             <i
                 class="material-icons"
@@ -17,14 +19,20 @@
 
 <script>
 import { useKnowledgeStore } from '../stores/KnowledgeStore';
+import { computed } from 'vue';
 
 export default {
     props: ['course'],
-    setup() {
+    setup(props) {
         const courseStore = useKnowledgeStore();
 
+        const courseEditUrl = computed(() => {
+            return `/courses/${props.course.id}`;
+        });
+
         return {
-            courseStore
+            courseStore,
+            courseEditUrl
         }
     }
 }
@@ -60,5 +68,15 @@ export default {
 
 .course i.active {
     color: #ff005d;
+}
+
+.course:hover {
+    /* background-color: #ffd859; */
+    color: #ffd859;
+}
+
+.course-link {
+    text-decoration: none;
+    color: inherit;
 }
 </style>
