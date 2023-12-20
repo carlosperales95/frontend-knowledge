@@ -41,4 +41,4 @@ npm run build
 ```
 
 ## Deployed?
-[Example deploed here!](https://main--peppy-gnome-436003.netlify.app/courses/-Nm7_bcC_1m-pbkEVjIz)
+[Example deployed here!](https://peppy-gnome-436003.netlify.app)
