@@ -13,6 +13,8 @@ The features include:
 
 The data is managed using `Firebase` as DB, where all courses are saved.
 
+###Initial Setup
+Create a `.env` or `.env.local` file in the project's root folder, with the URL value of your `Firebase` DB as `VITE_API_URL`.
 
 ### Recommended IDE Setup
 
