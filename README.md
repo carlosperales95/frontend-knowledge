@@ -13,16 +13,19 @@ The features include:
 
 The data is managed using `Firebase` as DB, where all courses are saved.
 
-### Initial Setup
-Create a `.env` or `.env.local` file in the project's root folder, with the URL value of your `Firebase` DB as `VITE_API_URL`.
+<details> 
+ <summary><h3>Initial Setup</h3></summary>
+  Create a `.env` or `.env.local` file in the project's root folder, with the URL value of your `Firebase` DB as `VITE_API_URL`.
+  
+  ### Recommended IDE Setup
+  
+  [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+  
+  ### Customize configuration
+  
+  See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-### Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-### Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+</details>
 
 ## Project Setup
 
