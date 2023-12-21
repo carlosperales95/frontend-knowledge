@@ -39,7 +39,7 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
             this.isLoading = false;
         },
         async addCourse(course) {
-            const res = await fetch('https://pinia-courses-default-rtdb.firebaseio.com/courses.json', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/courses.json`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(course)
@@ -49,7 +49,7 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
             this.courses.push(course);
         },
         async deleteCourse(id) {
-            const res = await fetch(`https://pinia-courses-default-rtdb.firebaseio.com/courses/${id}.json`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/courses/${id}.json`, {
                 method: 'DELETE'
             });
             
@@ -58,7 +58,7 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
         },
         async toggleFav(id) {
             const course = this.courses.find(c => c.id === id);
-            const res = await fetch(`https://pinia-courses-default-rtdb.firebaseio.com/courses/${id}.json`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/courses/${id}.json`, {
                 method: 'PATCH',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({isFav: !course.isFav})
@@ -69,7 +69,7 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
         },
         async getCourse(id) {
             this.isLoading = true;
-            const res = await fetch(`https://pinia-courses-default-rtdb.firebaseio.com/courses/${id}.json`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/courses/${id}.json`);
             
             if(res.error) console.log(res.error);
             const data = await res.json();
@@ -77,7 +77,7 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
             this.isLoading = false
         },
         async editCourse(id, course) {
-            const res = await fetch(`https://pinia-courses-default-rtdb.firebaseio.com/courses/${id}.json`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/courses/${id}.json`, {
                 method: 'PATCH',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
