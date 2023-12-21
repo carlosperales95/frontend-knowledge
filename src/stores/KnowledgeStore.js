@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-
 export const useKnowledgeStore = defineStore('knowledgeStore', {
     state: () => ({
         name: 'Carlos',
@@ -24,7 +23,7 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
         async getCourses() {
             this.courses = [];
             this.isLoading = true;
-            const res = await fetch('https://pinia-courses-default-rtdb.firebaseio.com/courses.json');
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/courses.json`);
             const data = await res.json();
             
             if (data) {
