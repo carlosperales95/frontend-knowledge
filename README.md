@@ -14,7 +14,7 @@ The features include:
 The data is managed using `Firebase` as DB, where all courses are saved.
 
 <details> 
- <summary><h3>Initial Setup</h3></summary>
+ <summary><h2>Initial Setup</23></summary>
   Create a `.env` or `.env.local` file in the project's root folder, with the URL value of your `Firebase` DB as `VITE_API_URL`.
   
   ### Recommended IDE Setup
@@ -27,23 +27,27 @@ The data is managed using `Firebase` as DB, where all courses are saved.
 
 </details>
 
-## Project Setup
 
-```sh
-npm install
-```
+<details> 
+ <summary><h2>Project Setup</h2></summary>
 
-### Compile and Hot-Reload for Development
+ ```sh
+ npm install
+ ```
+ 
+ ### Compile and Hot-Reload for Development
+ 
+ ```sh
+ npm run dev
+ ```
+ 
+ ### Compile and Minify for Production
+ 
+ ```sh
+ npm run build
+ ```
+</details>
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
 
 ## Deployed?
 [Example deployed here!](https://peppy-gnome-436003.netlify.app)
