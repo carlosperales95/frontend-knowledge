@@ -19,7 +19,7 @@
             :course="selectedCourse"
             :id="id"
             :mode="mode"
-            @change-mode="changeMode()"
+            @change-mode="changeMode"
         ></course-view>
     </div>
 </template>

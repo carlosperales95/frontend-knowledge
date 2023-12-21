@@ -88,7 +88,8 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
             });
             
             if(res.error) console.log(res.error);
-            course.isFav = !course.isFav;
+            const data = await res.json();
+            this.selectedCourse = data;
         },
     }
 });

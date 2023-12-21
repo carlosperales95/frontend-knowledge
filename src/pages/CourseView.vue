@@ -58,16 +58,22 @@
 
 <script>
 import { useKnowledgeStore } from '../stores/KnowledgeStore';
-import { useRouter } from "vue-router";
 import useForm from "../components/hooks/form.js";
-import { ref, toRef } from 'vue';
+import { toRef } from 'vue';
 export default {
     props: ['course', 'id', 'mode'],
-    setup(props) {
+    setup(props, context) {
         const courseStore = useKnowledgeStore();
-        const router = useRouter();
         
-        const {title, source, duration, validateTitle, validateSource, validateDuration, clearErrors} = useForm();
+        const {
+            title,
+            source,
+            duration,
+            validateTitle,
+            validateSource,
+            validateDuration,
+            clearErrors
+        } = useForm();
 
         title.value = props.course.title;
         source.value = props.course.source;
@@ -86,13 +92,7 @@ export default {
                 isFav: false,
                 duration: duration.value
             });
-            mode.value = 'view';
-            // router.replace({path: '/'});
-        };
-
-        const goBack = () => {
-            mode.value = 'view';
-            console.log(mode);
+            context.emit('change-mode', 'view');
         };
 
         return {
@@ -101,10 +101,9 @@ export default {
             validateDuration,
             validateSource,
             clearErrors,
-            goBack,
             title,
             source,
-            duration
+            duration,
         };
     },
 }
