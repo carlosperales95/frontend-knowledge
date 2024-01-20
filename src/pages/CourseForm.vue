@@ -45,12 +45,13 @@
                     v-model.number="duration.value"
                     @blur="validateDuration"
                     @focus="clearErrors"
-                />
+                /> minutes
             </div>
             <p class="validation-error" v-if="!duration.isValid">
                 A course of 0 minutes is not possible. Please enter an approximate course duration (in minutes)
             </p>
             <button>Submit</button>
+            <a>Back</a>
         </form>
     </div>
 </template>
@@ -138,7 +139,7 @@ form button {
 
 form label {
     margin-right: 0.5rem;
-    width: 15rem;
+    width: 12rem;
 }
 
 form input {
@@ -148,6 +149,7 @@ form input {
     color: #555;
     font-size: 14px;
     width: 25rem;
+    margin-right: 5px;
 }
 
 form select {

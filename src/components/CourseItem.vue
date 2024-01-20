@@ -3,6 +3,12 @@
         <router-link class="course-link" :to="courseEditUrl" :course="course">
             <h3>{{ course.title }}</h3>
         </router-link>
+        <h5>
+            {{ courseHMSDuration }}
+        </h5>
+        <h5>
+            {{ course.source }}
+        </h5>
         <div class="icons">
             <i
                 class="material-icons"
@@ -30,9 +36,14 @@ export default {
             return `/courses/${props.course.id}`;
         });
 
+        const courseHMSDuration = computed(() => {
+            const hours = Math.floor(props.course.duration/60);
+            return `${hours} h ${props.course.duration - (hours * 60)} min`;
+        });
         return {
             courseStore,
-            courseEditUrl
+            courseEditUrl,
+            courseHMSDuration
         }
     }
 }
@@ -53,6 +64,11 @@ export default {
 .course h3,
 .course .icons {
     display: inline-block;
+}
+
+.course h5 {
+    color: #bbb;
+    width: 20%;
 }
 
 .course .icons {
@@ -78,5 +94,6 @@ export default {
 .course-link {
     text-decoration: none;
     color: inherit;
+    width: 40%;
 }
 </style>
