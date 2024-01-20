@@ -107,11 +107,12 @@ export default {
 }
 
 form {
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    align-items: center;
 }
 
 .form-control {
@@ -148,7 +149,7 @@ form input {
     border-radius: 6px;
     color: #555;
     font-size: 14px;
-    width: 25rem;
+    width: 20rem;
     margin-right: 5px;
 }
 
@@ -158,7 +159,7 @@ form select {
     border-radius: 6px;
     color: #555;
     font-size: 14px;
-    width: 26rem;
+    width: 21.5rem;
     padding: 0.6rem;
 }
 
