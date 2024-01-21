@@ -3,7 +3,7 @@
         <h1> Edit course</h1>
         <form @submit.prevent="handleSubmit">
             <div class="form-control">
-                <label for="title">Course or resource title</label>
+                <label for="title">Title</label>
                 <input
                     type="text"
                     name="title"
@@ -17,7 +17,7 @@
                 Please enter a title for the course. It can be anything!
             </p>
             <div class="form-control">
-                <label for="source">Source of the course</label>
+                <label for="source">Source</label>
                 <select
                     name="source"
                     placeholder="I found this on..."
@@ -37,7 +37,7 @@
                 Please select one of the available sources. If it's not one of the options, choose 'other'
             </p>
             <div class="form-control">
-                <label for="title">Duration of the course</label>
+                <label for="title">Duration</label>
                 <input
                     type="number"
                     name="duration"
@@ -46,6 +46,7 @@
                     @blur="validateDuration"
                     @focus="clearErrors"
                 />
+                <span style="margin-left:-80px;">min</span>
             </div>
             <p class="validation-error" v-if="!duration.isValid">
                 A course of 0 minutes is not possible. Please enter an approximate course duration (in minutes)
@@ -111,25 +112,25 @@ export default {
 
 <style scoped>
 .new-course-form {
+    /* background: #e7e7e7; */
     padding: 20px 0;
     text-align: center;
 }
 
 form {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    align-items: center;
 }
 
 .form-control {
     display: inline-flex;
     flex-direction: row;
-    width: 40rem;
-    padding: 1rem;
+    width: 80%;
+    margin: 1rem auto;
     text-align: left;
-    align-content: flex-start;
     align-items: center;
 }
 
@@ -143,12 +144,21 @@ form button {
     font-size: 1em;
     width: 20rem;
     margin-top: 2rem;
+}
+
+a {
+    padding: 10px;
+    font-family: "Poppins";
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 20rem;
     align-self: center;
 }
 
 form label {
-    margin-right: 0.5rem;
-    width: 15rem;
+    margin-right: 1rem;
+    width: 5rem;
 }
 
 form input {
@@ -157,7 +167,8 @@ form input {
     border-radius: 6px;
     color: #555;
     font-size: 14px;
-    width: 25rem;
+    width: 100%;
+    margin-right: 5px;
 }
 
 form select {
@@ -166,7 +177,7 @@ form select {
     border-radius: 6px;
     color: #555;
     font-size: 14px;
-    width: 26rem;
+    width: 100%;
     padding: 0.6rem;
 }
 
@@ -175,9 +186,5 @@ form select {
     color: #ff9659;
     text-align: left;
     font-size: 14px;
-}
-
-a {
-    cursor: pointer;
 }
 </style>

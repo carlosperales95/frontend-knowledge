@@ -13,7 +13,9 @@
         </div>
         <div class="details-row">
             <h3>Duration</h3>
-            <p>{{ courseHMSDuration }}</p>
+            <p>
+                {{ courseHMDuration }} ({{ selectedCourse.duration }} min)
+            </p>
         </div>
     </div>
     <div v-else>
@@ -40,9 +42,14 @@ export default {
         const { selectedCourse, isLoading } = storeToRefs(courseStore);
         courseStore.getCourse(props.id);
 
-        const courseHMSDuration = computed(() => {
+        const courseHMDuration = computed(() => {
             const hours = Math.floor(selectedCourse.value.duration/60);
-            return `${hours} h ${selectedCourse.value.duration - (hours * 60)} min`;
+            const minutes = selectedCourse.value.duration % 60;
+
+            let timeHM = "";
+            timeHM += hours > 0 ? `${hours} h ` : "";
+            timeHM += minutes > 0 ? `${minutes} min` : "";
+            return timeHM;
         });
 
         const mode = ref('view');
@@ -55,7 +62,7 @@ export default {
             selectedCourse,
             isLoading,
             mode,
-            courseHMSDuration,
+            courseHMDuration,
             changeMode
         };
     },

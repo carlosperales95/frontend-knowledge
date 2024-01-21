@@ -5,6 +5,7 @@
         :filters="filters"
         :courses="courses"
         @change-filter="changeFilter"
+        @search="storeSearch"
     >
         <div>
             <div v-for="f in filters" :key="f.name">
@@ -35,17 +36,57 @@ export default {
     setup() {
         const courseStore = useKnowledgeStore();
 
-        const { courses, isLoading, favs, totalCount, favCount } = storeToRefs(courseStore);
+        const {
+            courses,
+            isLoading,
+            sorted,
+            searched,
+            searchCount,
+            sortedFavs,
+            completes,
+            totalCount,
+            favCount,
+            completesCount,
+            searchString
+        } = storeToRefs(courseStore);
+        
         courseStore.getCourses();
 
         const filter = ref('all');
         const filters = reactive([
-            {name: 'all', text: 'All Courses', data: {count: totalCount, courses: courses}},
-            {name: 'favs', text: 'Fav Courses', data: {count: favCount, courses: favs}}
+            {
+                name: 'all',
+                text: 'All',
+                type: 'toggle',
+                data: {count: totalCount, courses: sorted}
+            },
+            {
+                name: 'favs',
+                text: 'Fav',
+                type: 'toggle',
+                data: {count: favCount, courses: sortedFavs}
+            },
+            {
+                name: 'completed',
+                text: 'Completed',
+                type: 'toggle',
+                data: {count: completesCount, courses: completes}
+            },
+            {
+                name: 'search',
+                text: 'search',
+                type: 'search',
+                data: {count: searchCount, courses: searched}
+            }
         ]);
 
         const changeFilter = (value) => {
             filter.value = value;
+        };
+
+        const storeSearch = (value) => {
+            filter.value = 'search';
+            searchString.value = value;
         };
 
         return {
@@ -53,7 +94,8 @@ export default {
             filters,
             courses,
             isLoading,
-            changeFilter
+            changeFilter,
+            storeSearch
         };
     }
 }

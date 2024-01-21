@@ -1,13 +1,18 @@
 <template>
     <nav class="filter">
-        <button
-            v-for="f in filters"
-            :key="f.name"
-            class="filter-button"
-            @click="$emit('change-filter', f.name)"
-        >
-            {{ f.text }}
-        </button>
+        <div v-for="f in filters" :key="f.name">
+            <button
+                v-if="f.type === 'toggle'"
+                class="filter-button"
+                @click="$emit('change-filter', f.name)"
+            > {{ f.text }} </button>
+            <input
+                type="text"
+                v-if="f.type === 'search'"
+                class="filter-button search"
+                @input="handleSearchChange"
+            />
+        </div>
     </nav>
 
     <div class="loading" v-if="isLoading">Loading courses...</div>
@@ -20,16 +25,28 @@
 
 <script>
 import CourseList from './CoursesList.vue';
+import { storeToRefs } from 'pinia';
+import { useKnowledgeStore } from '../stores/KnowledgeStore';
 
 export default {
     components: {
         CourseList
     },
-    props: ['isLoading', 'filter', 'filters', 'courses'],
-    emits: ['change-filter'],
-    // setup(props) {
-    //     console.log(props.courses);
-    // }
+    props: ['isLoading', 'filter', 'filters', 'courses', 'type'],
+    emits: ['change-filter', 'search'],
+    setup(_, context) {
+        const courseStore = useKnowledgeStore();
+        const { searchedString } = storeToRefs(courseStore);
+
+        const handleSearchChange = (event) => {
+            context.emit('search', event.target.value);
+        }
+
+        return {
+            searchedString,
+            handleSearchChange
+        };
+    }
 }
 </script>
 
@@ -40,8 +57,11 @@ export default {
     text-align: left;
 }
 
-.filter-button {
+.filter div {
     display: inline-block;
+}
+
+.filter-button {
     margin-right: 15px;
     background: #fff;
     border: 2px solid #555;
@@ -50,6 +70,10 @@ export default {
     cursor: pointer;
     font-size: 0.8;
     font-size: 1em;
+}
+
+input:focus {
+    outline: none;
 }
 
 .loading {

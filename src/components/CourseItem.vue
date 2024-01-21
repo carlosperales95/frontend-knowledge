@@ -1,10 +1,23 @@
 <template>
     <div class="course">
-        <router-link class="course-link" :to="courseEditUrl" :course="course">
-            <h3>{{ course.title }}</h3>
+        <input
+            class="course-complete"
+            type="checkbox"
+            v-model="course.completed"
+            @change="courseStore.toggleComplete(course.id)"
+        />
+        <router-link
+            class="course-link"
+            :class="{'completed': course.completed}"
+            :to="courseEditUrl"
+            :course="course"
+        >
+            <h3>
+                {{ course.title }}
+            </h3>
         </router-link>
         <h5>
-            {{ courseHMSDuration }}
+            {{ courseHMDuration }}
         </h5>
         <h5>
             {{ course.source }}
@@ -36,14 +49,20 @@ export default {
             return `/courses/${props.course.id}`;
         });
 
-        const courseHMSDuration = computed(() => {
+        const courseHMDuration = computed(() => {
             const hours = Math.floor(props.course.duration/60);
-            return `${hours} h ${props.course.duration - (hours * 60)} min`;
+            const minutes = props.course.duration % 60;
+
+            let timeHM = "";
+            timeHM += hours > 0 ? `${hours} h ` : "";
+            timeHM += minutes > 0 ? `${minutes} min` : "";
+            return timeHM;
         });
+
         return {
             courseStore,
             courseEditUrl,
-            courseHMSDuration
+            courseHMDuration,
         }
     }
 }
@@ -59,6 +78,15 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.course-complete {
+    border: 1px solid #444;
+}
+
+.completed h3 {
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
 }
 
 .course h3,

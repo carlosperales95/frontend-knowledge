@@ -45,13 +45,14 @@
                     v-model.number="duration.value"
                     @blur="validateDuration"
                     @focus="clearErrors"
-                /> minutes
+                />
+                <span style="margin-left:-80px;">min</span>
             </div>
             <p class="validation-error" v-if="!duration.isValid">
                 A course of 0 minutes is not possible. Please enter an approximate course duration (in minutes)
             </p>
             <button>Submit</button>
-            <a>Back</a>
+            <a class="back-btn" @click="goBack">Back</a>
         </form>
     </div>
 </template>
@@ -79,11 +80,16 @@ export default {
                 title: title.value,
                 source: source.value,
                 isFav: false,
+                completed: false,
                 duration: duration.value
             });
 
             router.replace({ path: '/' });
         };
+
+        const goBack = () => {
+            router.go(-1);
+        }
 
         return {
             handleSubmit,
@@ -91,6 +97,7 @@ export default {
             validateDuration,
             validateSource,
             clearErrors,
+            goBack,
             title,
             source,
             duration
@@ -133,6 +140,16 @@ form button {
     font-size: 1em;
     width: 20rem;
     margin-top: 2rem;
+}
+
+a {
+    padding: 10px;
+    font-family: "Poppins";
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 20rem;
+    align-self: center;
 }
 
 form label {

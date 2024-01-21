@@ -2,7 +2,9 @@
     <div class="courses-list">
         <div class="list-header">
             <p>You have {{ coursesCount }} courses left to finish</p>
-            <router-link class="router-button" to="/courses/new">Add Course</router-link>
+            <router-link class="router-button" to="/courses/new">
+                Add Course
+            </router-link>
         </div>
         <course-item
             v-for="course in courses"
