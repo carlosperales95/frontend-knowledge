@@ -6,12 +6,18 @@
                 class="filter-button"
                 @click="$emit('change-filter', f.name)"
             > {{ f.text }} </button>
-            <input
-                type="text"
-                v-if="f.type === 'search'"
-                class="filter-button search"
-                @input="handleSearchChange"
-            />
+            <div v-if="f.type === 'search'">
+                <input
+                    type="text"
+                    class="filter-button search"
+                    v-model="searchString"
+                    @input="handleSearchChange"
+                />
+                <i
+                    class="material-icons"
+                    @click="clearSearch"
+                >clear</i>
+            </div>
         </div>
     </nav>
 
@@ -36,15 +42,20 @@ export default {
     emits: ['change-filter', 'search'],
     setup(_, context) {
         const courseStore = useKnowledgeStore();
-        const { searchedString } = storeToRefs(courseStore);
+        const { searchString } = storeToRefs(courseStore);
 
         const handleSearchChange = (event) => {
             context.emit('search', event.target.value);
+        };
+
+        const clearSearch = function () {
+            context.emit('search', "");
         }
 
         return {
-            searchedString,
-            handleSearchChange
+            searchString,
+            handleSearchChange,
+            clearSearch
         };
     }
 }
@@ -59,6 +70,19 @@ export default {
 
 .filter div {
     display: inline-block;
+}
+
+div i {
+    font-size: 2em;
+    margin-left: 6px;
+    cursor: pointer;
+    color: #bbb;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+div i:hover {
+    color: #ffd859;
 }
 
 .filter-button {

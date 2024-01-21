@@ -24,7 +24,8 @@ export const useKnowledgeStore = defineStore('knowledgeStore', {
         },
         searched: (state) => {
             if (state.searchString === "" || !state.searchString)
-                return state.courses;
+                return state.courses
+                    .reduce((acc, course) => !course.completed ? [course, ...acc] : [...acc, course], []);
 
             return state.courses
                 .filter(course => course.title
