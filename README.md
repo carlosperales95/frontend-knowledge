@@ -50,4 +50,4 @@ The data is managed using `Firebase` as DB, where all courses are saved.
 
 
 ## Deployed?
-[Example deployed here!](https://peppy-gnome-436003.netlify.app)
+[Example deployed here!](https://todo-knowledge-base.netlify.app/)
